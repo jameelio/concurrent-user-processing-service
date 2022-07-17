@@ -39,12 +39,21 @@ app.post('/register/stream',async (req:Request,res:Response) => {
     res.status(201).send(registration)
 });
 
-app.get('/deregister/stream',async() => {
+app.post('/deregister/stream',async(req:Request,res:Response) => {
+    let deregister;
+    const body = req.body;
+    const user = body.user;
+    const deviceId = body.deviceId;
+    
     try {
-        
-    } catch (error) {
-        
+        deregister = await concurrency.releaseActiveStreamer(user,deviceId);
+    } catch (error:any) {
+        if(error.status){
+            return  res.status(error.status).send(error)
+          }
+          res.status(500).send('internal server error')
     }
+    res.status(200).send('deleted')
 })
 
 export default app;

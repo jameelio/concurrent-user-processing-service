@@ -1,6 +1,7 @@
 import utils from "../utils/utils";
 import db from '../database';
 import logger from "../logger";
+import * as R from 'ramda'
 
 const verifyActiveStream = (streamerName:string ,deviceID:string) => {
     return new Promise(async (resolve,reject) => {
@@ -75,7 +76,45 @@ const registerStream = (streamerName:string) => {
     })
 }
 
+const releaseActiveStreamer = (streamerName:string, deviceId:string) => {
+    return new Promise(async (resolve,reject) => {
+
+       try {
+        let isRegistered:any = await db.findUserStream(streamerName);
+
+        if(!isRegistered){
+            logger.warn(`user not found : user => ${streamerName}`)
+            return reject({
+                status : 404,
+                message: 'user not found'
+            }) 
+        }
+
+        const isValidStreamer = utils.isValidateStreamID(deviceId,isRegistered.active_devices);
+        if(!isValidStreamer) {
+            logger.warn(
+                `invalid streaming device: deviceID => ${deviceId}`);
+            return reject({
+                status : 401,
+                message : 'invalid streaming device, cannot deregister'
+            })
+        }
+
+        isRegistered.active_devices = R.filter(o => o !== deviceId, isRegistered.active_devices);
+        
+        await db.updateUserStream(isRegistered.user,isRegistered.active_devices);
+        logger.info(`Succesful deregister : device => ${deviceId}`);
+        
+        return resolve('deleted')
+       } catch (error) {
+        logger.error(JSON.stringify(error))
+        reject(error) 
+       }
+    })
+}
+
 export = {
     verifyActiveStream,
-    registerStream
+    registerStream,
+    releaseActiveStreamer
 }
