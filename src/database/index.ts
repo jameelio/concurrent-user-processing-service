@@ -15,18 +15,22 @@ async function init(uri:string,db_name:string,collection_name:string) {
 }
 
 async function insertUserStream(user:any) {
+    return await collections.users?.insertOne(user);      
+}
 
-    try {
-        const insertUser = await collections.users?.insertOne(user);
-        console.log(insertUser)
-        return 'ok'
-    } catch (error) {
-        
-    }
+async function findUserStream(user:string) {
+    return await collections.users?.findOne({user: user})
+}
+
+async function updateUserStream(user:string,device:any) {
+    return await collections.users?.findOneAndUpdate({user: user},{$set:{"active_devices": device}})
     
 }
 
 export = {
     collections,
-    init
+    init,
+    insertUserStream,
+    findUserStream,
+    updateUserStream
 }

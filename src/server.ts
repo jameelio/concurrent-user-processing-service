@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import app from "./app";
 import db from "./database"
+import logger from './logger';
 
 const mongodb_uri = process.env.MONGO_URI || 'mongodb://localhost:27017';
 const collection = process.env.COLLECTION || 'users';
@@ -10,5 +11,5 @@ const port = process.env.NODE_PORT || 3000;
 db.init(mongodb_uri,database_name,collection);
 
 app.listen(port , () => {
-    return console.log(`Express Listening: http://localhost:${port}`)
+    return logger.info(`Express Listening: http://localhost:${port}`)
 })
