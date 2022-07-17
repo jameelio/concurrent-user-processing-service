@@ -7,9 +7,9 @@ const server = request(app);
 describe("App",()=>{
     it("responds with Hello world",(done)=>{
         server
-        .get('/verifyStream')
+        .get('/verify/stream')
         .expect(200)
-        .end((err,res)=>{
+        .end((err,res:any)=>{
             if(err){
                 return done(err)
             }
