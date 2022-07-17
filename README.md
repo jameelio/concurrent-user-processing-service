@@ -35,6 +35,14 @@ npm run test
 npm run dev
 ```
 
+* For docker
+```
+docker build -t meelio/concurrent-user-processor .
+```
+```
+docker run -p 49160:3000 -d meelio/concurrent-user-processor
+```
+
 
 ## API 
 
