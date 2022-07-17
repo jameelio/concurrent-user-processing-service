@@ -21,30 +21,30 @@ describe("App",()=>{
         })
     })
 
-    it("return 401 unauthorised when invalid stream id is passed",(done)=>{
-        server
-        .get('/verify/stream?&user=jameel&deviceId=12345')
-        .expect(401)
-        .end((err,res:any)=>{
-            if(err){
-                return done(err)
-            }
-            expect(res.text).to.be.equal('invalid streaming device')
-            done();
-        })
-    })
+    // it("return 401 unauthorised when invalid stream id is passed",(done)=>{
+    //     server
+    //     .get('/verify/stream?&user=jameel&deviceId=12345')
+    //     .expect(401)
+    //     .end((err,res:any)=>{
+    //         if(err){
+    //             return done(err)
+    //         }
+    //         expect(res.text).to.be.equal('invalid streaming device')
+    //         done();
+    //     })
+    // })
 
-    it("return 200 when valid stream id is passed",(done)=>{
-        server
-        .get('/verify/stream?&user=jameel&deviceId=1234')
-        .expect(200)
-        .end((err,res:any)=>{
-            if(err){
-                return done(err)
-            }
-            expect(res.text).to.be.equal('1');
-            done();
-        })
-    })
+    // it("return 200 when valid stream id is passed",(done)=>{
+    //     server
+    //     .get('/verify/stream?&user=jameel&deviceId=1234')
+    //     .expect(200)
+    //     .end((err,res:any)=>{
+    //         if(err){
+    //             return done(err)
+    //         }
+    //         expect(res.text).to.be.equal('1');
+    //         done();
+    //     })
+    // })
 })
 
