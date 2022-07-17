@@ -21,6 +21,14 @@ a request too access to a particular content, once the user has completed view t
 * git clone https://github.com/jameelio/concurrent-user-processing-service.git 
 * npm install
 * create .env file follow .example.env
+```
+NODE_ENVIROMENT=dev
+NODE_PORT=3000
+MONGO_URI=''
+COLLECTION=''
+DB_NAME=''
+LOG_LEVEL=''
+```
 
 ### Executing program
 
