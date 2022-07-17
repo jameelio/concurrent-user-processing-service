@@ -13,14 +13,16 @@ const aboutToStream = (user: string, db:any):any => R.append({ user: user , ...d
 
 const generateUnqiueDeviceId = (): string => uuidv4();
 const addDevice = (deviceID:string, activeDevices:[]): any => R.append(deviceID, activeDevices)
-const isValidateStreamID = (streamId:string, db:any): boolean => R.indexOf(streamId,db) == -1 ? false : true 
+const isValidateStreamID = (streamId:string, db:any): boolean => R.indexOf(streamId,db) == -1 ? false : true;
+const maxStreamVerification = (activeDevices:string[] ,deviceCount:number): boolean => R.length(activeDevices) == deviceCount ? true : false;
 
 export = {
     getRegisteredUser,
     aboutToStream,
     generateUnqiueDeviceId,
     addDevice,
-    isValidateStreamID
+    isValidateStreamID,
+    maxStreamVerification
 }
 
 

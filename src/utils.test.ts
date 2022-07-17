@@ -8,6 +8,7 @@ describe('Register User Stream',() => {
         const added_user = utils.aboutToStream('steve', db);  
         expect(added_user[0]).to.have.all.keys(['user','active_devices','device_count']);
     });
+
     it('should return existing user',() => {
       const db = [
         {
@@ -18,8 +19,9 @@ describe('Register User Stream',() => {
       ];            
       const userObject = utils.getRegisteredUser('dave', db);
       expect(userObject).to.contain({ user: 'dave'});
-  });
-  it('should register new device', () => {
+    });
+    
+    it('should register new device', () => {
     const db = [
       {
         "user" : "lucas",
@@ -36,7 +38,7 @@ describe('Register User Stream',() => {
     const user :any = utils.getRegisteredUser('lucas', db);
     user.active_devices = utils.addDevice(device_Id,user.active_devices);
     expect(user.active_devices).to.contain(device_Id);
-  });
+    });
 })
 
 describe('Verify User Stream',() => {
@@ -63,9 +65,7 @@ describe('Verify User Stream',() => {
 
     expect(results).to.true
   });
-
-
-  it('should reject when verified device limit exceed',() => {
+  it('should reject new stream when verified device limit exceed',() => {
     const db = [
       {
         "user" : "lucas",
@@ -79,10 +79,13 @@ describe('Verify User Stream',() => {
       }
     ];
 
-    
+    const { device_count, active_devices } = utils.getRegisteredUser('lucas', db);
+    const hasMaxDeviceCountReached = utils.maxStreamVerification(active_devices,device_count);
 
+    const expected = true;
+    expect(hasMaxDeviceCountReached).to.eql(expected);
   });
 
-  it('should allow de-registration of device stream',() => {})
+  // it('should allow de-registration of device stream',() => {})
 
 })
